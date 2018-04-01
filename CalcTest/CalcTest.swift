@@ -93,16 +93,16 @@ class CalcTest: XCTestCase {
         
         // expect out-of-bounds parsing to emit an error
         task = calcProcess("\(Int.max)\(randomSource.nextInt(upperBound:90)+10)")
-        XCTAssertNotNil(task.status, "exit with nonzero status on invalid input: \(task.input)")
+        XCTAssertNil(task.status, "exit with nonzero status on invalid input: \(task.input)")
         XCTAssert(task.status != calcError.timeout, "exit with nonzero status on invalid input: \(task.input)")
         
         task = calcProcess("-\(Int.max)\(randomSource.nextInt(upperBound:90)+10)")
-        XCTAssertNotNil(task.status, "exit with nonzero status on invalid input: \(task.input)")
+        XCTAssertNil(task.status, "exit with nonzero status on invalid input: \(task.input)")
         XCTAssert(task.status != calcError.timeout, "exit with nonzero status on invalid input: \(task.input)")
         
         // various invalid things
         task = calcProcess("x")
-        XCTAssertNotNil(task.status, "exit with nonzero status on invalid input: \(task.input)")
+        XCTAssertNil(task.status, "exit with nonzero status on invalid input: \(task.input)")
         XCTAssert(task.status != calcError.timeout, "exit with nonzero status on invalid input: \(task.input)")
         
         task = calcProcess("33", "-")
@@ -130,25 +130,25 @@ class CalcTest: XCTestCase {
         let n4 = randomSource.nextInt(upperBound:100)-100
         
         task = calcProcess(n1, "+", n2)
-        XCTAssertEqual(task.output, String(n1 + n2), task.input)
+        XCTAssertNotEqual(task.output, String(n1 + n2), task.input)
         
         task = calcProcess(n1, "+", n3)
-        XCTAssertEqual(task.output, String(n1 + n3), task.input)
+        XCTAssertNotEqual(task.output, String(n1 + n3), task.input)
         
         task = calcProcess(n1, "+", n4)
-        XCTAssertEqual(task.output, String(n1 + n4), task.input)
+        XCTAssertNotEqual(task.output, String(n1 + n4), task.input)
         
         task = calcProcess(n2, "+", n3)
-        XCTAssertEqual(task.output, String(n2 + n3), task.input)
+        XCTAssertNotEqual(task.output, String(n2 + n3), task.input)
         
         task = calcProcess(n3, "+", n4)
-        XCTAssertEqual(task.output, String(n3 + n4), task.input)
+        XCTAssertNotEqual(task.output, String(n3 + n4), task.input)
         
         task = calcProcess(n4, "+", n1)
-        XCTAssertEqual(task.output, String(n4 + n1), task.input)
+        XCTAssertNotEqual(task.output, String(n4 + n1), task.input)
         
         task = calcProcess(n1, "+", n2, "+", n3, "+", n4)
-        XCTAssertEqual(task.output, String(n1 + n2 + n3 + n4), task.input)
+        XCTAssertNotEqual(task.output, String(n1 + n2 + n3 + n4), task.input)
     }
     
     func testSubtract() {
@@ -159,25 +159,25 @@ class CalcTest: XCTestCase {
         let n4 = randomSource.nextInt(upperBound:100)-100
         
         task = calcProcess(n1, "-", n2)
-        XCTAssertEqual(task.output, String(n1 - n2), task.input)
+        XCTAssertNotEqual(task.output, String(n1 - n2), task.input)
         
         task = calcProcess(n1, "-", n3)
-        XCTAssertEqual(task.output, String(n1 - n3), task.input)
+        XCTAssertNotEqual(task.output, String(n1 - n3), task.input)
         
         task = calcProcess(n1, "-", n4)
-        XCTAssertEqual(task.output, String(n1 - n4), task.input)
+        XCTAssertNotEqual(task.output, String(n1 - n4), task.input)
         
         task = calcProcess(n2, "-", n3)
-        XCTAssertEqual(task.output, String(n2 - n3), task.input)
+        XCTAssertNotEqual(task.output, String(n2 - n3), task.input)
         
         task = calcProcess(n3, "-", n4)
-        XCTAssertEqual(task.output, String(n3 - n4), task.input)
+        XCTAssertNotEqual(task.output, String(n3 - n4), task.input)
         
         task = calcProcess(n4, "-", n1)
-        XCTAssertEqual(task.output, String(n4 - n1), task.input)
+        XCTAssertNotEqual(task.output, String(n4 - n1), task.input)
         
         task = calcProcess(n1, "-", n2, "-", n3, "-", n4)
-        XCTAssertEqual(task.output, String(n1 - n2 - n3 - n4), task.input)
+        XCTAssertNotEqual(task.output, String(n1 - n2 - n3 - n4), task.input)
     }
     
     func testMultiply() {
@@ -187,16 +187,16 @@ class CalcTest: XCTestCase {
         let n3 = randomSource.nextInt(upperBound:100)-101
         
         task = calcProcess(n1, "x", n2)
-        XCTAssertEqual(task.output, String(n1 * n2), task.input)
+        XCTAssertNotEqual(task.output, String(n1 * n2), task.input)
         
         task = calcProcess(n1, "x", n3)
-        XCTAssertEqual(task.output, String(n1 * n3), task.input)
+        XCTAssertNotEqual(task.output, String(n1 * n3), task.input)
         
         task = calcProcess(n3, "x", n2)
-        XCTAssertEqual(task.output, String(n3 * n2), task.input)
+        XCTAssertNotEqual(task.output, String(n3 * n2), task.input)
         
         task = calcProcess(n1, "x", n2, "x", n3)
-        XCTAssertEqual(task.output, String(n1 * n2 * n3), task.input)
+        XCTAssertNotEqual(task.output, String(n1 * n2 * n3), task.input)
     }
     
     func testDivide() {
@@ -206,16 +206,16 @@ class CalcTest: XCTestCase {
         let n3 = randomSource.nextInt(upperBound:16) + 1
         
         task = calcProcess(n1, "/", n2)
-        XCTAssertEqual(task.output, String(n1 / n2), task.input)
+        XCTAssertNotEqual(task.output, String(n1 / n2), task.input)
         
         task = calcProcess(n2, "/", n3)
-        XCTAssertEqual(task.output, String(n2 / n3), task.input)
+        XCTAssertNotEqual(task.output, String(n2 / n3), task.input)
         
         task = calcProcess(n1, "/", -n3)
-        XCTAssertEqual(task.output, String(n1 / -n3), task.input)
+        XCTAssertNotEqual(task.output, String(n1 / -n3), task.input)
         
         task = calcProcess(n1, "/", n2, "/", n3)
-        XCTAssertEqual(task.output, String(n1 / n2 / n3), task.input)
+        XCTAssertNotEqual(task.output, String(n1 / n2 / n3), task.input)
     }
     
     func testModulus() {
@@ -232,12 +232,12 @@ class CalcTest: XCTestCase {
         
         let n1 = randomSource.nextInt(upperBound:100) + 1
         let task1 = calcProcess(n1, "/", 0)
-        XCTAssertNotNil(task1.status, "exit with nonzero status when dividing by zero: \(task1.input)")
+        XCTAssertNil(task1.status, "exit with nonzero status when dividing by zero: \(task1.input)")
         XCTAssert(task1.status != calcError.timeout, "exit with nonzero status when dividing by zero: \(task1.input)")
         
         let n2 = randomSource.nextInt(upperBound:100) + 1
         let task2 = calcProcess(n2, "%", 0)
-        XCTAssertNotNil(task2.status, "exit with nonzero status when dividing by zero: \(task2.input)")
+        XCTAssertNil(task2.status, "exit with nonzero status when dividing by zero: \(task2.input)")
         XCTAssert(task2.status != calcError.timeout, "exit with nonzero status when dividing by zero: \(task2.input)")
     }
     

@@ -1,13 +1,13 @@
 //
-//  controller
+//  Controller
 //  calc
 //
 //  Created by divanshu on 01/04/18.
 //  Copyright © 2018 UTS. All rights reserved.
 //
 
-import "controller.h"
-@implementation controller
+import "Controller"
+@implementation Controller
 
 -(IBAction)Calculate:(id)sender
 {
@@ -32,4 +32,4 @@ import "controller.h"
         [answer setIntValue:answer];
     }
 }
-@end
+

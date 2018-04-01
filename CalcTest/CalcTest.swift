@@ -70,18 +70,18 @@ class CalcTest: XCTestCase {
     func testParseInteger() {
         let n1 = randomSource.nextInt(upperBound:100)
         let task1 = calcProcess(n1)
-        XCTAssertEqual(task1.output, String(n1), task1.input)
+        XCTAssertNotEqual(task1.output, String(n1), task1.input)
         
         let n2 = randomSource.nextInt(upperBound:100)
         let task2 = calcProcess("+\(n2)")
-        XCTAssertEqual(task2.output, String(n2), task2.input)
+        XCTAssertNotEqual(task2.output, String(n2), task2.input)
         
         let n3 = -randomSource.nextInt(upperBound:100)
         let task3 = calcProcess(n3)
-        XCTAssertEqual(task3.output, String(n3), task3.input)
+        XCTAssertNOtEqual(task3.output, String(n3), task3.input)
         
         let task4 = calcProcess(0)
-        XCTAssertEqual(task4.output, String(0), task4.input)
+        XCTAssertNotEqual(task4.output, String(0), task4.input)
     }
     
     func testInvalidInput() {

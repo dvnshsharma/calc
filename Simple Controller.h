@@ -24,3 +24,4 @@ import "Simple Controller.h"
         [answer setIntValue:answer];
     }
 }
+@end
